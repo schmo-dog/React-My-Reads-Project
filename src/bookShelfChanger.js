@@ -1,28 +1,20 @@
-import React from 'react'
+import React from 'react';
 
 const BookShelfChanger = () => {
   return (
-    <div className='book-shelf-changer'>
+    <div className="book-shelf-changer">
       <select>
-        <option value='none' disabled>
+        <option value="none" disabled>
           Move to...
         </option>
-        <option value='currentlyReading'>
-          Currently Reading
-        </option>
-        <option value='wantToRead'>
-          Want to Read
-        </option>
-        <option value='read'>
-          Read
-        </option>
-        <option value='none'>
-          None
-        </option>
+        <option value="currentlyReading">Currently Reading</option>
+        <option value="wantToRead">Want to Read</option>
+        <option value="read">Read</option>
+        <option value="none">None</option>
       </select>
     </div>
-  )
-}
+  );
+};
 
 // Book.propTypes = {
 //   bkgImage: PropTypes.string,
@@ -33,4 +25,4 @@ const BookShelfChanger = () => {
 //   linkVar: ''
 // }
 
-export default BookShelfChanger
+export default BookShelfChanger;
