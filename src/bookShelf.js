@@ -23,8 +23,4 @@ BookShelf.propTypes = {
   shelfTitle: PropTypes.string
 };
 
-// Oar.defaultProps = {
-//   linkVar: ''
-// }
-
 export default BookShelf;
