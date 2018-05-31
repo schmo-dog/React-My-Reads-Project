@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import * as BooksAPI from './BooksAPI';
+import Book from './book';
+import { SSL_OP_NO_QUERY_MTU } from 'constants';
 
 class Search extends Component {
   state = {
@@ -8,14 +11,24 @@ class Search extends Component {
 
   upatedQuery = query => {
     this.setState(() => ({
-      query: query.trim()
+      query: query
     }));
+    this.handleSearch(query);
   };
 
-  // TO DO: Continue watching video to hook up search results from the API and apply it here.
+  handleSearch = query => {
+    BooksAPI.search(query).then(books => {
+      console.log(books)
+      this.setState(() => ({
+        results: books
+      }));
+    });
+  };
 
   render() {
+    const { query } = this.state;
     const { setCategory, setSearch } = this.props;
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -28,18 +41,26 @@ class Search extends Component {
           </a>
           <div className="search-books-input-wrapper">
             {setCategory()}
-            {JSON.stringify(this.state)}
+            {/* {JSON.stringify(this.state)} */}
             <input
               type="text"
               placeholder="Search by title or author"
-              value={this.state.query}
+              value={query}
               onChange={event => this.upatedQuery(event.target.value)}
             />
           </div>
         </div>
-        <div className="search-books-results">
-          <ol className="books-grid" />
-        </div>
+        {!!this.state.results && (
+          <div className="search-books-results">
+            <ol className="books-grid">
+              {this.state.results.map(book => (
+                <li key={book.id}>
+                  <Book bkgImage="" title={book.title} authors="" />
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
       </div>
     );
   }

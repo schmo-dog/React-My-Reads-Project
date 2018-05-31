@@ -18,7 +18,7 @@ class BooksApp extends React.Component {
   // The overall state of each book in the categories will live here- being passed the fucntions to update the category in the search and in the book components
 
   setCategory = () => {
-    console.log('hello world');
+    // console.log('hello world');
   };
 
   setSearch = () => {
