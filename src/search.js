@@ -13,12 +13,8 @@ class Search extends Component {
     this.setState(() => ({
       query: query
     }));
-    // if (query.length > 0) {
-      this.handleSearch(query);
-    // }
-
+    this.handleSearch(query);
     {
-      // JSON.stringify(this.state);
     }
   };
 
@@ -63,6 +59,7 @@ class Search extends Component {
                 {this.state.results.map(book => (
                   <li key={book.id}>
                     <Book
+                      setCategory={setCategory}
                       bkgImage={book.imageLinks.thumbnail}
                       title={book.title}
                       authors={book.authors}
