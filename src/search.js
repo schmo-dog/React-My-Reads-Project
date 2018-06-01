@@ -2,27 +2,33 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as BooksAPI from './BooksAPI';
 import Book from './book';
-import { SSL_OP_NO_QUERY_MTU } from 'constants';
 
 class Search extends Component {
   state = {
-    query: ''
+    query: '',
+    results: ''
   };
 
   upatedQuery = query => {
     this.setState(() => ({
       query: query
     }));
-    this.handleSearch(query);
+    if (query.length > 0) {
+      this.handleSearch(query);
+    }
+
+    {
+      JSON.stringify(this.state);
+    }
   };
 
   handleSearch = query => {
-    BooksAPI.search(query).then(books => {
-      console.log(books)
-      this.setState(() => ({
-        results: books
-      }));
-    });
+    BooksAPI.search(query)
+      .then(books => {
+        console.log(books);
+        this.setState(() => ({ results: books }));
+      })
+      .catch(console.log('empty query'));
   };
 
   render() {
@@ -41,7 +47,7 @@ class Search extends Component {
           </a>
           <div className="search-books-input-wrapper">
             {setCategory()}
-            {/* {JSON.stringify(this.state)} */}
+
             <input
               type="text"
               placeholder="Search by title or author"
@@ -50,17 +56,13 @@ class Search extends Component {
             />
           </div>
         </div>
-        {!!this.state.results && (
-          <div className="search-books-results">
-            <ol className="books-grid">
-              {this.state.results.map(book => (
-                <li key={book.id}>
-                  <Book bkgImage="" title={book.title} authors="" />
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
+        {!!this.state.results && this.state.results.length > 0 && (<div className="search-books-results">
+              <ol className="books-grid">
+                {this.state.results.map(book => <li key={book.id}>
+                    <Book bkgImage={book.imageLinks.thumbnail} title={book.title} authors={book.authors[0]} />
+                  </li>)}
+              </ol>
+            </div>)}
       </div>
     );
   }
