@@ -13,22 +13,22 @@ class Search extends Component {
     this.setState(() => ({
       query: query
     }));
-    if (query.length > 0) {
+    // if (query.length > 0) {
       this.handleSearch(query);
-    }
+    // }
 
     {
-      JSON.stringify(this.state);
+      // JSON.stringify(this.state);
     }
   };
 
   handleSearch = query => {
     BooksAPI.search(query)
       .then(books => {
-        console.log(books);
+        // console.log(books);
         this.setState(() => ({ results: books }));
       })
-      .catch(console.log('empty query'));
+      .catch();
   };
 
   render() {
@@ -56,13 +56,22 @@ class Search extends Component {
             />
           </div>
         </div>
-        {!!this.state.results && this.state.results.length > 0 && (<div className="search-books-results">
+        {!!this.state.results &&
+          this.state.results.length > 0 && (
+            <div className="search-books-results">
               <ol className="books-grid">
-                {this.state.results.map(book => <li key={book.id}>
-                    <Book bkgImage={book.imageLinks.thumbnail} title={book.title} authors={book.authors[0]} />
-                  </li>)}
+                {this.state.results.map(book => (
+                  <li key={book.id}>
+                    <Book
+                      bkgImage={book.imageLinks.thumbnail}
+                      title={book.title}
+                      authors={book.authors}
+                    />
+                  </li>
+                ))}
               </ol>
-            </div>)}
+            </div>
+          )}
       </div>
     );
   }

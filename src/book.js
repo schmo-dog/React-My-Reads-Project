@@ -29,7 +29,7 @@ const Book = props => {
 Book.propTypes = {
   bkgImage: PropTypes.string,
   title: PropTypes.string,
-  authors: PropTypes.string
+  authors: PropTypes.array
 }
 
 // Oar.defaultProps = {
