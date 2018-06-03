@@ -42,8 +42,6 @@ class Search extends Component {
             Close
           </a>
           <div className="search-books-input-wrapper">
-            {setCategory()}
-
             <input
               type="text"
               placeholder="Search by title or author"

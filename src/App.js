@@ -15,13 +15,20 @@ class BooksApp extends React.Component {
      */
     showSearchPage: false,
     value: 'none',
-    books: [],
-    isDoneLoading: false
+    books: []
   };
 
-  setCategory = event => {
-    console.log('hello world');
-    // this.setState(() => ({ value: event.target.value }));
+  setCategory = (id, category) => {
+    console.log('set category function called');
+    console.log(id, category);
+
+    BooksAPI.update({id}, category)
+      .then(books => {
+         console.log(books);
+        // this.setState(() => ({ results: books }));
+      })
+      // .then(() => console.log(books))
+      .catch(() => console.log('error happened'));
   };
 
   setSearch = () => {
@@ -32,43 +39,51 @@ class BooksApp extends React.Component {
     BooksAPI.getAll()
       .then(books => {
         // console.log(books);
-        this.setState(() => ({ books, isDoneLoading: true }));
+        this.setState(() => ({ books }));
       })
-      .then(() => console.log(this.state));
+      .then();
   }
 
   render() {
-    console.log(this.state);
+    // console.log('first component mounting state', this.state);
     let currentlyReading = this.state.books.filter(book => book.shelf === 'currentlyReading');
     let wantToRead = this.state.books.filter(book => book.shelf === 'wantToRead');
     let read = this.state.books.filter(book => book.shelf === 'read');
 
-    return <div className="app">
-        {this.state.showSearchPage ? <Search setCategory={this.setCategory} setSearch={this.setSearch} /> : <div className="list-books">
+    return (
+      <div className="app">
+        {this.state.showSearchPage ? (
+          <Search setCategory={this.setCategory} setSearch={this.setSearch} />
+        ) : (
+          <div className="list-books">
             <div className="list-books-title">
               <h1>Book Shelf</h1>
             </div>
             <div className="list-books-content">
-              {this.state.books.length > 0 && <div>
+              {this.state.books.length > 0 && (
+                <div>
                   {/* {console.log('currently reading',currentlyReading)} */}
-                  <BookShelf setCategory={this.setCategory} shelfTitle="Currently Reading" bookList={currentlyReading} />
-                  {/* <BookShelf
-                  setCategory={this.setCategory}
-                  shelfTitle="Want to Read"
-                  booksList={this.currentlyReading}
-                />
-                <BookShelf
-                  setCategory={this.setCategory}
-                  shelfTitle="Read"
-                  booksList={this.currentlyReading}
-                /> */}
-                </div>}
+                  <BookShelf
+                    setCategory={this.setCategory}
+                    shelfTitle="Currently Reading"
+                    bookList={currentlyReading}
+                  />
+                  <BookShelf
+                    setCategory={this.setCategory}
+                    shelfTitle="Want to Read"
+                    bookList={wantToRead}
+                  />
+                  <BookShelf setCategory={this.setCategory} shelfTitle="Read" bookList={read} />
+                </div>
+              )}
             </div>
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
             </div>
-          </div>}
-      </div>;
+          </div>
+        )}
+      </div>
+    );
   }
 }
 

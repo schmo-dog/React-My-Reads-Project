@@ -5,10 +5,17 @@ class BookShelfChanger extends Component {
   state = {
     value: 'none'
   };
+
+  updateCategory = event => {
+    // console.log('update category function called');
+    // console.log(event.target.value);
+      this.props.setCategory(this.props.bookId, event.target.value);
+    // console.log(this.props.bookId, event.target.value);
+  };
   render() {
     return (
       <div className="book-shelf-changer">
-        <select value={this.state.value} onChange={this.props.setCategory()}>
+        <select value={this.state.value} onChange={this.updateCategory}>
           <option value="none" disabled>
             Move to...
           </option>
@@ -23,7 +30,8 @@ class BookShelfChanger extends Component {
 }
 
 BookShelfChanger.propTypes = {
-  setCategory: PropTypes.func
+  setCategory: PropTypes.func,
+  bookId: PropTypes.string
 };
 
 export default BookShelfChanger;
