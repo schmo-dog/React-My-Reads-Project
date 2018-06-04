@@ -14,21 +14,21 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false,
-    value: 'none',
+    bookSelection: 'none',
     books: []
   };
 
   setCategory = (id, category) => {
-    console.log('set category function called');
-    console.log(id, category);
+    //console.log('set category function called');
+    //console.log(id, category);
 
     BooksAPI.update({id}, category)
-      .then(books => {
-         console.log(books);
-        // this.setState(() => ({ results: books }));
-      })
-      // .then(() => console.log(books))
-      .catch(() => console.log('error happened'));
+      .then(BooksAPI.getAll()
+        .then(books => {
+          console.log(books);
+          this.setState(() => ({ books }));
+        }))
+      // .catch(() => console.log('error happened'));
   };
 
   setSearch = () => {
@@ -38,14 +38,14 @@ class BooksApp extends React.Component {
   componentDidMount() {
     BooksAPI.getAll()
       .then(books => {
-        // console.log(books);
+        //console.log(books);
         this.setState(() => ({ books }));
       })
-      .then();
   }
 
   render() {
     // console.log('first component mounting state', this.state);
+    console.log('the books state', this.state.books)
     let currentlyReading = this.state.books.filter(book => book.shelf === 'currentlyReading');
     let wantToRead = this.state.books.filter(book => book.shelf === 'wantToRead');
     let read = this.state.books.filter(book => book.shelf === 'read');
@@ -53,7 +53,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <Search setCategory={this.setCategory} setSearch={this.setSearch} />
+          <Search setCategory={this.setCategory} setSearch={this.setSearch} booksInShelf={this.state.books} />
         ) : (
           <div className="list-books">
             <div className="list-books-title">

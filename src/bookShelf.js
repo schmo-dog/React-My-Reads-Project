@@ -16,7 +16,8 @@ const BookShelf = props => {
                     bkgImage={book.imageLinks.thumbnail}
                     title={book.title}
                     authors={book.authors}
-                    bookId={book.id} />
+                    bookId={book.id}
+                    currentShelf={book.shelf} />
                 </li>)}
                 </ol> :
                 <span>Loading...</span>}

@@ -21,13 +21,20 @@ class Search extends Component {
   handleSearch = query => {
     BooksAPI.search(query)
       .then(books => {
-        // console.log(books);
+        console.log('books query', books);
         this.setState(() => ({ results: books }));
       })
-      .catch();
+
+        //  .then(() => {
+        //    let unique = [...new Set([...this.state.results, ...this.props.booksInShelf])];
+        //    filteredList = unique.filter(book => word.length > 6);
+        //    console.log('unique',unique);
   };
 
+  
+
   render() {
+    console.log('in search- books on shelf', this.props.booksInShelf);
     const { query } = this.state;
     const { setCategory, setSearch } = this.props;
 
@@ -61,6 +68,8 @@ class Search extends Component {
                       bkgImage={book.imageLinks.thumbnail}
                       title={book.title}
                       authors={book.authors}
+                      bookId={book.id}
+                      currentShelf={book.shelf}
                     />
                   </li>
                 ))}
@@ -73,7 +82,8 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-  setCategory: PropTypes.func
+  setCategory: PropTypes.func,
+  booksInShelf: PropTypes.array
 };
 export default Search;
 

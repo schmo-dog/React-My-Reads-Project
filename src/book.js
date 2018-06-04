@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import BookShelfChanger from './bookShelfChanger'
 
 const Book = props => {
-  const { bkgImage, title, authors, setCategory, bookId } = props
+  const { bkgImage, title, authors, setCategory, bookId, currentShelf } = props
   const divStyle = {
     width: 128,
     height: 193,
@@ -15,7 +15,7 @@ const Book = props => {
     <div className='book'>
       <div className='book-top'>
         <div className='book-cover' style={divStyle} />
-        <BookShelfChanger setCategory={setCategory} bookId={bookId} />
+        <BookShelfChanger setCategory={setCategory} bookId={bookId} currentShelf={currentShelf} />
       </div>
       <div className='book-title'>
         {title}
@@ -32,11 +32,8 @@ Book.propTypes = {
   title: PropTypes.string,
   authors: PropTypes.array,
   setCategory: PropTypes.func,
-  bookId: PropTypes.string
+  bookId: PropTypes.string,
+  currentShelf: PropTypes.string
 }
-
-// Oar.defaultProps = {
-//   linkVar: ''
-// }
 
 export default Book
