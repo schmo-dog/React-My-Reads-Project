@@ -14,38 +14,22 @@ class Search extends Component {
       query: query
     }));
     this.handleSearch(query);
-    {
-    }
   };
 
   handleSearch = query => {
-    BooksAPI.search(query)
-      .then(books => {
-        this.setState(() => ({ results: books }));
-      })
-      .then(() => this.filterBooks(this.state.results));
+    BooksAPI.search(query).then(books => {
+      this.setState(() => ({ results: books }));
+    });
   };
 
-  filterBooks = books => {
-    console.log('books in entire search', books);
-    console.log('books on shelves', this.props.booksInShelf);
-    let newArray = []
+  getExistingShelf = book => {
+    const searchBookId = book.id;
+    const matchingShelfBook = this.props.booksInShelf.find(book => book.id === searchBookId);
 
-    const booksInShelf = this.props.booksInShelf;
-    const finalList = books.map(result => {
-      const filterList = booksInShelf.filter(book => book.id === result.id);
-      console.log('filtered list', filterList);
-      
-       if (filterList.length > 0) {
-         newArray.push(filterList);
-       }
-
-    });
-    console.log('new array',newArray);
+    return matchingShelfBook !== undefined ? matchingShelfBook.shelf : 'none';
   };
 
   render() {
-    //console.log('in search- books on shelf', this.props.booksInShelf);
     const { query } = this.state;
     const { setCategory, setSearch } = this.props;
 
@@ -80,7 +64,7 @@ class Search extends Component {
                       title={book.title}
                       authors={book.authors}
                       bookId={book.id}
-                      currentShelf={book.shelf}
+                      currentShelf={this.getExistingShelf(book)}
                     />
                   </li>
                 ))}
@@ -97,12 +81,3 @@ Search.propTypes = {
   booksInShelf: PropTypes.array
 };
 export default Search;
-
-// {/*
-//                   NOTES: The search from BooksAPI is limited to a particular set of search terms.
-//                   You can find these search terms here:
-//                   https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-//                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-//                   you don't find a specific author or title. Every search is limited by search terms.
-//                 */}
