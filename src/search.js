@@ -21,20 +21,31 @@ class Search extends Component {
   handleSearch = query => {
     BooksAPI.search(query)
       .then(books => {
-        console.log('books query', books);
         this.setState(() => ({ results: books }));
       })
-
-        //  .then(() => {
-        //    let unique = [...new Set([...this.state.results, ...this.props.booksInShelf])];
-        //    filteredList = unique.filter(book => word.length > 6);
-        //    console.log('unique',unique);
+      .then(() => this.filterBooks(this.state.results));
   };
 
-  
+  filterBooks = books => {
+    console.log('books in entire search', books);
+    console.log('books on shelves', this.props.booksInShelf);
+    let newArray = []
+
+    const booksInShelf = this.props.booksInShelf;
+    const finalList = books.map(result => {
+      const filterList = booksInShelf.filter(book => book.id === result.id);
+      console.log('filtered list', filterList);
+      
+       if (filterList.length > 0) {
+         newArray.push(filterList);
+       }
+
+    });
+    console.log('new array',newArray);
+  };
 
   render() {
-    console.log('in search- books on shelf', this.props.booksInShelf);
+    //console.log('in search- books on shelf', this.props.booksInShelf);
     const { query } = this.state;
     const { setCategory, setSearch } = this.props;
 

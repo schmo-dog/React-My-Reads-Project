@@ -25,7 +25,7 @@ class BooksApp extends React.Component {
     BooksAPI.update({id}, category)
       .then(BooksAPI.getAll()
         .then(books => {
-          console.log(books);
+         // console.log(books);
           this.setState(() => ({ books }));
         }))
       // .catch(() => console.log('error happened'));
@@ -45,7 +45,7 @@ class BooksApp extends React.Component {
 
   render() {
     // console.log('first component mounting state', this.state);
-    console.log('the books state', this.state.books)
+   // console.log('the books state', this.state.books)
     let currentlyReading = this.state.books.filter(book => book.shelf === 'currentlyReading');
     let wantToRead = this.state.books.filter(book => book.shelf === 'wantToRead');
     let read = this.state.books.filter(book => book.shelf === 'read');
