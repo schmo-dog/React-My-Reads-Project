@@ -2,16 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class BookShelfChanger extends Component {
-  // state = {
-  //   currentSelection: 'none'
-  // };
-
   updateCategory = event => {
-    // console.log('update category function called');
-    //console.log(event.target.value);
     this.props.setCategory(this.props.bookId, event.target.value);
-    // this.setState({ currentSelection: event.target.value });
-    // console.log(this.props.bookId, event.target.value);
   };
   render() {
     return (

@@ -9,7 +9,7 @@ const Book = props => {
     height: 193,
     backgroundImage: 'url(' + bkgImage + ')'
   }
-  // console.log('book id', bookId)
+
   return (
 
     <div className='book'>
