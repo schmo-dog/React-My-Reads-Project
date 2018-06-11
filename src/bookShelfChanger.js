@@ -9,7 +9,7 @@ class BookShelfChanger extends Component {
     return (
       <div className="book-shelf-changer">
         <select value={this.props.currentShelf} onChange={this.updateCategory}>
-          <option value="none" disabled>
+          <option disabled>
             Move to...
           </option>
           <option value="currentlyReading">Currently Reading</option>
