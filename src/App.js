@@ -13,6 +13,7 @@ class BooksApp extends React.Component {
     books: []
   };
 
+  // Current Solution
   setCategory = (id, category) => {
     BooksAPI.update({ id }, category).then(
       BooksAPI.getAll().then(books => {
@@ -20,6 +21,16 @@ class BooksApp extends React.Component {
       })
     );
   };
+
+
+// Solution that does not re-render
+  // setCategory = (book, category) => {
+  //   BooksAPI.update({ book }, category).then(
+  //     this.setState(state => ({
+  //       books: state.books.filter(b => b.id !== book.id).concat(book)
+  //     }))
+  //   );
+  // };
 
   componentDidMount() {
     BooksAPI.getAll().then(books => {
